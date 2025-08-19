@@ -7,328 +7,122 @@
     <link rel="icon" href="โลโก้สภานักเรียน.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: linear-gradient(135deg, #041665 0%, #3e0972 80%);
-            min-height: 100vh;
-            padding: 20px;
+            min-height: 100vh; padding: 20px;
         }
-
         .container {
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 980px; margin: 0 auto;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            animation: slideUp 0.6s ease-out;
+            border-radius: 20px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden; animation: slideUp 0.6s ease-out;
         }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        @keyframes slideUp { from {opacity:0; transform:translateY(30px);} to {opacity:1; transform:translateY(0);} }
         .header {
             background: linear-gradient(135deg, #040056, #041665);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+            color: white; padding: 30px; text-align: center; position: relative; overflow: hidden;
         }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
+        .header::before{
+            content:''; position:absolute; inset:0;
+            background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity:.3;
         }
+        .header h1 { font-size: 2.2rem; margin-bottom: 10px; position:relative; z-index:1; transition: .3s; }
+        .header p { font-size: 1.1rem; opacity:.9; position:relative; z-index:1; transition:.3s; }
 
-        .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
+        /* Tabs */
+        .tabs {
+            display:flex; gap:10px; padding:14px 20px; background:#fff; border-bottom: 1px solid #e5e7eb;
+            position: sticky; top: 0; z-index: 10;
         }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
-            transition: all 0.3s ease;
+        .tab-btn {
+            flex:0 0 auto; padding:10px 16px; border:2px solid #e5e7eb; border-radius:12px; background:#fff;
+            font-weight:700; cursor:pointer; transition:.25s; color:#374151;
         }
+        .tab-btn:hover { border-color:#9ca3af; transform: translateY(-1px); }
+        .tab-btn.active { background: linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; border-color:transparent; box-shadow:0 8px 18px rgba(79,70,229,.25); }
 
-        .form-container {
-            padding: 40px;
-        }
+        .section { display:none; padding: 24px 24px 36px; }
+        .section.active { display:block; }
 
-        .form-group {
-            margin-bottom: 25px;
-            position: relative;
-            transition: all 0.3s ease;
-        }
+        .form-container { padding: 8px 0 0; }
 
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #374151;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .required {
-            color: #ef4444;
-        }
-
+        .form-group { margin-bottom: 25px; position: relative; transition: all 0.3s ease; }
+        .form-group label { display:block; margin-bottom:8px; font-weight:600; color:#374151; font-size:1rem; transition:.3s; }
+        .required { color:#ef4444; }
         .form-control {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
+            width:100%; padding:15px; border:2px solid #e5e7eb; border-radius:12px; font-size:1rem;
+            transition:.3s; background:#fff;
         }
+        .form-control:focus { outline:none; border-color:#4f46e5; box-shadow:0 0 0 3px rgba(79,70,229,.1); transform:translateY(-2px); }
+        .form-control:hover { border-color:#9ca3af; }
+        textarea.form-control { resize: vertical; min-height: 120px; }
 
-        .form-control:focus {
-            outline: none;
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .form-control:hover {
-            border-color: #9ca3af;
-        }
-
-        textarea.form-control {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .priority-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .priority-option {
-            position: relative;
-        }
-
-        .priority-option input[type="radio"] {
-            position: absolute;
-            opacity: 0;
-        }
-
+        .priority-group { display:grid; grid-template-columns: repeat(auto-fit, minmax(120px,1fr)); gap:15px; margin-top:10px; }
+        .priority-option { position:relative; }
+        .priority-option input[type="radio"] { position:absolute; opacity:0; }
         .priority-label {
-            display: block;
-            padding: 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: white;
-            font-weight: 500;
+            display:block; padding:15px; border:2px solid #e5e7eb; border-radius:12px; text-align:center; cursor:pointer;
+            transition:.25s; background:#fff; font-weight:500;
         }
+        .priority-option input[type="radio"]:checked + .priority-label { border-color:#4f46e5; background:#4f46e5; color:#fff; transform:scale(1.05); }
+        .priority-low{ border-color:#10b981 !important; } .priority-option input[type="radio"]:checked + .priority-low{ background:#10b981 !important; }
+        .priority-medium{ border-color:#f59e0b !important; } .priority-option input[type="radio"]:checked + .priority-medium{ background:#f59e0b !important; }
+        .priority-high{ border-color:#ef4444 !important; } .priority-option input[type="radio"]:checked + .priority-high{ background:#ef4444 !important; }
 
-        .priority-option input[type="radio"]:checked + .priority-label {
-            border-color: #4f46e5;
-            background: #4f46e5;
-            color: white;
-            transform: scale(1.05);
+        .submit-btn{
+            width:100%; padding:18px; background:linear-gradient(135deg,#4f46e5,#7c3aed); color:#fff; border:none; border-radius:12px;
+            font-size:1.1rem; font-weight:600; cursor:pointer; transition:.3s; margin-top:20px; position:relative; overflow:hidden;
         }
-
-        .priority-low {
-            border-color: #10b981 !important;
+        .submit-btn:hover{ transform:translateY(-2px); box-shadow:0 10px 25px rgba(79,70,229,.3); }
+        .submit-btn:active{ transform:translateY(0); }
+        .submit-btn::before{
+            content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent); transition:left .5s;
         }
+        .submit-btn:hover::before{ left:100%; }
 
-        .priority-option input[type="radio"]:checked + .priority-low {
-            background: #10b981 !important;
+        .success-message{
+            display:none; background:linear-gradient(135deg,#10b981,#059669); color:#fff; padding:20px; border-radius:12px; margin-top:20px; text-align:center;
+            animation: fadeIn .5s ease-out; transition:.3s;
         }
+        @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
 
-        .priority-medium {
-            border-color: #f59e0b !important;
+        .floating-elements{ position:fixed; inset:0; pointer-events:none; z-index:-1; }
+        .floating-circle{ position:absolute; border-radius:50%; background:rgba(255,255,255,.1); animation:float 6s ease-in-out infinite; }
+        .floating-circle:nth-child(1){ width:80px; height:80px; top:20%; left:10%; animation-delay:0s; }
+        .floating-circle:nth-child(2){ width:120px; height:120px; top:60%; right:10%; animation-delay:2s; }
+        .floating-circle:nth-child(3){ width:60px; height:60px; bottom:20%; left:20%; animation-delay:4s; }
+        @keyframes float { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-20px);} }
+
+        .developer-button{
+            position:fixed; bottom:20px; right:20px; background:#1e88e5; color:#fff; padding:12px 20px; border-radius:30px; text-decoration:none;
+            font-size:.95rem; box-shadow:0 4px 10px rgba(0,0,0,.2); transition:.3s; z-index:1000;
         }
+        .developer-button:hover{ background:#1565c0; transform:translateY(-2px); }
 
-        .priority-option input[type="radio"]:checked + .priority-medium {
-            background: #f59e0b !important;
+        /* Status (Looker) area */
+        .status-tip{
+            margin: -6px 0 14px; color:#374151; font-size:.95rem; opacity:.85;
         }
-
-        .priority-high {
-            border-color: #ef4444 !important;
-        }
-
-        .priority-option input[type="radio"]:checked + .priority-high {
-            background: #ef4444 !important;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .submit-btn:hover::before {
-            left: 100%;
-        }
-
-        .success-message {
-            display: none;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 20px;
-            text-align: center;
-            animation: fadeIn 0.5s ease-out;
-            transition: all 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .floating-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .floating-circle:nth-child(1) {
-            width: 80px;
-            height: 80px;
-            top: 20%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-circle:nth-child(2) {
-            width: 120px;
-            height: 120px;
-            top: 60%;
-            right: 10%;
-            animation-delay: 2s;
-        }
-
-        .floating-circle:nth-child(3) {
-            width: 60px;
-            height: 60px;
-            bottom: 20%;
-            left: 20%;
-            animation-delay: 4s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .developer-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #1e88e5;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
-
-        .developer-button:hover {
-            background-color: #1565c0;
-            transform: translateY(-2px);
+        .looker-wrap{
+            width:100%; height:70vh; border:0; border-radius:14px; box-shadow: 0 10px 24px rgba(0,0,0,.08);
         }
 
         @media (max-width: 768px) {
-            .container {
-                margin: 0 10px;
-            }
-            
-            .form-container {
-                padding: 30px 20px;
-            }
-            
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .priority-group {
-                grid-template-columns: 1fr;
-            }
+            .container { margin: 0 10px; }
+            .header h1 { font-size: 1.8rem; }
+            .tabs { gap:8px; padding:12px 12px; }
+            .tab-btn { padding:9px 12px; font-size:.95rem; }
+            .priority-group { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <!-- Language switcher -->
     <div id="languageSwitcher" style="position: fixed; top: 20px; left: 20px; z-index: 999;">
         <select id="languageSelect" style="padding: 8px 12px; border-radius: 10px; font-weight: 600; font-family: 'Sarabun'; background: white; border: 2px solid #ccc; box-shadow: 0 2px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;">
             <option value="th">  TH ภาษาไทย </option>
@@ -336,6 +130,7 @@
         </select>
     </div>
 
+    <!-- Decorative floating shapes -->
     <div class="floating-elements">
         <div class="floating-circle"></div>
         <div class="floating-circle"></div>
@@ -352,90 +147,109 @@
             <p id="subtitle">โรงเรียนเตรียมอุดมศึกษาพัฒนาการสุวรรณภูมิ</p>
         </div>
 
-        <div class="form-container">
-            <form id="repairForm">
-                <div class="form-group">
-                    <label for="studentName" id="label-name">ชื่อ-นามสกุล <span class="required">*</span></label>
-                    <input type="text" id="studentName" class="form-control" required placeholder="กรุณากรอกชื่อ-นามสกุล หากไม่ต้องการระบุให้พิมพ์ ไม่ประสงค์ออกนาม">
-                </div>
+        <!-- Tabs -->
+        <nav class="tabs" role="tablist" aria-label="main navigation">
+            <button id="tab-form" class="tab-btn active" role="tab" aria-selected="true" aria-controls="section-form">📝 แบบฟอร์มแจ้งซ่อม</button>
+            <button id="tab-status" class="tab-btn" role="tab" aria-selected="false" aria-controls="section-status">📊 สถานะรายงาน</button>
+        </nav>
 
-                <div class="form-group">
-                    <label for="studentId" id="label-id">รหัสประจำตัวนักเรียน <span class="required">*</span></label>
-                    <input type="text" id="studentId" class="form-control" required placeholder="เช่น 05490" pattern="[0-9]{5}" title="กรุณากรอกรหัสนักเรียน 5 หลัก หากไม่ต้องการระบุให้พิมพ์ 99999">
-                </div>
+        <!-- Section: Form -->
+        <section id="section-form" class="section active" role="tabpanel" aria-labelledby="tab-form">
+            <div class="form-container">
+                <form id="repairForm">
+                    <div class="form-group">
+                        <label for="studentName" id="label-name">ชื่อ-นามสกุล <span class="required">*</span></label>
+                        <input type="text" id="studentName" class="form-control" required placeholder="กรุณากรอกชื่อ-นามสกุล หากไม่ต้องการระบุให้พิมพ์ ไม่ประสงค์ออกนาม">
+                    </div>
 
-                <div class="form-group">
-                    <label for="location" id="label-location">สถานที่/ห้อง <span class="required">*</span></label>
-                    <input type="text" id="location" class="form-control" required placeholder="เช่น ห้องเรียน 3205, ห้องคอมพิวเตอร์, ห้องน้ำ">
-                </div>
+                    <div class="form-group">
+                        <label for="studentId" id="label-id">รหัสประจำตัวนักเรียน <span class="required">*</span></label>
+                        <input type="text" id="studentId" class="form-control" required placeholder="เช่น 05490" pattern="[0-9]{5}" title="กรุณากรอกรหัสนักเรียน 5 หลัก หากไม่ต้องการระบุให้พิมพ์ 99999">
+                    </div>
 
-                <div class="form-group">
-                    <label for="equipment" id="label-equipment">อุปกรณ์ที่ต้องการซ่อม <span class="required">*</span></label>
-                    <input type="text" id="equipment" class="form-control" required placeholder="เช่น หลอดไฟ, พัดลม, เครื่องปรับอากาศ">
-                </div>
+                    <div class="form-group">
+                        <label for="location" id="label-location">สถานที่/ห้อง <span class="required">*</span></label>
+                        <input type="text" id="location" class="form-control" required placeholder="เช่น ห้องเรียน 3205, ห้องคอมพิวเตอร์, ห้องน้ำ">
+                    </div>
 
-                <div class="form-group">
-                    <label for="problemDescription" id="label-problem">รายละเอียดของปัญหา <span class="required">*</span></label>
-                    <textarea id="problemDescription" class="form-control" required placeholder="กรุณาอธิบายปัญหาที่พบ เช่น การทำงานผิดปกติ, ส่งผลกระทบต่อตัวเราอย่างไร หรือสาเหตุที่คาดว่าทำให้เกิดความเสียหาย"></textarea>
-                </div>
+                    <div class="form-group">
+                        <label for="equipment" id="label-equipment">อุปกรณ์ที่ต้องการซ่อม <span class="required">*</span></label>
+                        <input type="text" id="equipment" class="form-control" required placeholder="เช่น หลอดไฟ, พัดลม, เครื่องปรับอากาศ">
+                    </div>
 
-                <div class="form-group">
-                    <label id="label-priority">ระดับความเร่งด่วน <span class="required">*</span></label>
-                    <div class="priority-group">
-                        <div class="priority-option">
-                            <input type="radio" id="priorityLow" name="priority" value="ต่ำ" required>
-                            <label for="priorityLow" class="priority-label priority-low" id="priority-low-label">
-                                🟢 <span id="priority-low-text">ต่ำ</span><br>
-                                <small id="priority-low-desc">ไม่เร่งด่วน</small>
-                            </label>
-                        </div>
-                        <div class="priority-option">
-                            <input type="radio" id="priorityMedium" name="priority" value="ปานกลาง" required>
-                            <label for="priorityMedium" class="priority-label priority-medium" id="priority-medium-label">
-                                🟡 <span id="priority-medium-text">ปานกลาง</span><br>
-                                <small id="priority-medium-desc">ใช้งานได้บ้าง</small>
-                            </label>
-                        </div>
-                        <div class="priority-option">
-                            <input type="radio" id="priorityHigh" name="priority" value="สูง" required>
-                            <label for="priorityHigh" class="priority-label priority-high" id="priority-high-label">
-                                🔴 <span id="priority-high-text">สูง</span><br>
-                                <small id="priority-high-desc">เร่งด่วน</small>
-                            </label>
+                    <div class="form-group">
+                        <label for="problemDescription" id="label-problem">รายละเอียดของปัญหา <span class="required">*</span></label>
+                        <textarea id="problemDescription" class="form-control" required placeholder="กรุณาอธิบายปัญหาที่พบ เช่น การทำงานผิดปกติ, ส่งผลกระทบต่อตัวเราอย่างไร หรือสาเหตุที่คาดว่าทำให้เกิดความเสียหาย"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label id="label-priority">ระดับความเร่งด่วน <span class="required">*</span></label>
+                        <div class="priority-group">
+                            <div class="priority-option">
+                                <input type="radio" id="priorityLow" name="priority" value="ต่ำ" required>
+                                <label for="priorityLow" class="priority-label priority-low" id="priority-low-label">
+                                    🟢 <span id="priority-low-text">ต่ำ</span><br>
+                                    <small id="priority-low-desc">ไม่เร่งด่วน</small>
+                                </label>
+                            </div>
+                            <div class="priority-option">
+                                <input type="radio" id="priorityMedium" name="priority" value="ปานกลาง" required>
+                                <label for="priorityMedium" class="priority-label priority-medium" id="priority-medium-label">
+                                    🟡 <span id="priority-medium-text">ปานกลาง</span><br>
+                                    <small id="priority-medium-desc">ใช้งานได้บ้าง</small>
+                                </label>
+                            </div>
+                            <div class="priority-option">
+                                <input type="radio" id="priorityHigh" name="priority" value="สูง" required>
+                                <label for="priorityHigh" class="priority-label priority-high" id="priority-high-label">
+                                    🔴 <span id="priority-high-text">สูง</span><br>
+                                    <small id="priority-high-desc">เร่งด่วน</small>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="contactInfo" id="label-contact">ช่องทางติดต่อกลับ</label>
-                    <input type="text" id="contactInfo" class="form-control" placeholder="Line ID หรือ Instagram account เพื่อติดตามสถานะการซ่อมแซม (ไม่บังคับ)">
-                </div>
+                    <div class="form-group">
+                        <label for="contactInfo" id="label-contact">ช่องทางติดต่อกลับ</label>
+                        <input type="text" id="contactInfo" class="form-control" placeholder="Line ID หรือ Instagram account เพื่อติดตามสถานะการซ่อมแซม (ไม่บังคับ)">
+                    </div>
 
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    📤 ส่งรายงานการซ่อม
-                </button>
+                    <button type="submit" class="submit-btn" id="submitBtn">📤 ส่งรายงานการซ่อม</button>
 
-                <div id="successMessage" class="success-message">
-                    <h3 id="successTitle">✅ ส่งรายงานเรียบร้อยแล้ว!</h3>
-                    <p id="successDetail">ทางสภานักเรียนจะประสานกับคณะผู้บริหาร และทีมช่างโดยเร็ว <br>
-                    หมายเลขรายงาน: <span id="reportNumber"></span></p>
-                </div>
-            </form>
-        </div>
+                    <div id="successMessage" class="success-message">
+                        <h3 id="successTitle">✅ ส่งรายงานเรียบร้อยแล้ว!</h3>
+                        <p id="successDetail">ทางสภานักเรียนจะประสานกับคณะผู้บริหาร และทีมช่างโดยเร็ว <br>
+                        หมายเลขรายงาน: <span id="reportNumber"></span></p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Section: Status (Looker Studio) -->
+        <section id="section-status" class="section" role="tabpanel" aria-labelledby="tab-status">
+            <p class="status-tip" id="statusTip">แผงสถานะด้านล่างนี้เป็นรายงาน Looker Studio แบบฝังตัว หากไม่แสดงโปรดตรวจสอบการอนุญาต “Embed report”</p>
+            <!-- ใช้ลิงก์ embed ของ Looker Studio -->
+            <iframe class="looker-wrap"
+                title="สถานะการแจ้งซ่อม (Looker Studio)"
+                loading="lazy"
+                allowfullscreen
+                src="https://lookerstudio.google.com/embed/reporting/8d86d734-53f2-4237-ab34-fb51cc170d69">
+            </iframe>
+        </section>
     </div>
 
     <a href="developer.html" class="developer-button" id="developerBtn">เกี่ยวกับผู้พัฒนา</a>
 
     <script>
-        // Translation object
+        // ===== Translations =====
         const translations = {
             th: {
                 title: "ระบบแจ้งซ่อมแซมออนไลน์",
                 subtitle: "โรงเรียนเตรียมอุดมศึกษาพัฒนาการสุวรรณภูมิ",
                 labelName: "ชื่อ-นามสกุล",
-                placeholderName: "หากไม่ต้องการระบุให้พิมพ์ ไม่ประสงค์ออกนาม",
+                placeholderName: "กรุณากรอกชื่อ-นามสกุล",
                 labelId: "รหัสประจำตัวนักเรียน",
-                placeholderId: "หากไม่ต้องการระบุให้พิมพ์ 99999",
+                placeholderId: "กรุณากรอกรหัสประจำตัวนักเรียน",
                 titleId: "กรุณากรอกรหัสนักเรียน 5 หลัก หากไม่ต้องการระบุให้พิมพ์ 99999",
                 labelLocation: "สถานที่/ห้อง",
                 placeholderLocation: "เช่น ห้องเรียน 3205, ห้องคอมพิวเตอร์, ห้องน้ำ",
@@ -444,28 +258,28 @@
                 labelProblem: "รายละเอียดของปัญหา",
                 placeholderProblem: "กรุณาอธิบายปัญหาที่พบ เช่น การทำงานผิดปกติ, ส่งผลกระทบต่อตัวเราอย่างไร หรือสาเหตุที่คาดว่าทำให้เกิดความเสียหาย",
                 labelPriority: "ระดับความเร่งด่วน",
-                priorityLow: "ต่ำ",
-                priorityLowDesc: "ไม่เร่งด่วน",
-                priorityMedium: "ปานกลาง",
-                priorityMediumDesc: "ใช้งานได้บ้าง",
-                priorityHigh: "สูง",
-                priorityHighDesc: "เร่งด่วน",
-                labelContact: "ช่องทางติดต่อกลับ",
-                placeholderContact: "Line ID หรือ Instagram account เพื่อติดตามสถานะการซ่อมแซม (ไม่บังคับ)",
+                priorityLow: "ต่ำ", priorityLowDesc: "ไม่เร่งด่วน",
+                priorityMedium: "ปานกลาง", priorityMediumDesc: "ใช้งานได้บ้าง",
+                priorityHigh: "สูง", priorityHighDesc: "เร่งด่วน",
+                labelContact: "ช่องทางติดต่อกลับ (ไม่บังคับ)",
+                placeholderContact: "Line ID ติดตามสถานะการซ่อมแซมผ่าน LineOA สภานักเรียน",
                 submitBtn: "📤 ส่งรายงานการซ่อม",
                 submitBtnLoading: "⏳ กำลังส่งข้อมูล...",
                 successTitle: "✅ ส่งรายงานเรียบร้อยแล้ว!",
                 successDetail: "ทางสภานักเรียนจะประสานกับคณะผู้บริหาร และทีมช่างโดยเร็ว <br>หมายเลขรายงาน:",
                 developerBtn: "เกี่ยวกับผู้พัฒนา",
-                errorMessage: "เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง"
+                errorMessage: "เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง",
+                menuForm: "📝 แบบฟอร์มการแจ้งซ่อมแซม",
+                menuStatus: "📊 สถานะรายงาน",
+                statusTip: "สถานะรายงานการแจ้งซ่อมแซม อัปเดตแบบเรียลไทม์"
             },
             en: {
                 title: "Online Repair Request System",
                 subtitle: "TRIAMUDOMSUKSA PATTHANAKARN SUVARNNABHUMI SCHOOL",
                 labelName: "Full Name",
-                placeholderName: "type 'Anonymous' if you prefer not to disclose",
+                placeholderName: "Please enter your first and last name.",
                 labelId: "Student ID",
-                placeholderId: "type 99999 if you prefer not to disclose",
+                placeholderId: "Please enter your student ID number.",
                 titleId: "Please enter 5-digit student ID or type 99999 if you prefer not to disclose",
                 labelLocation: "Location/Room",
                 placeholderLocation: "For example: Classroom 3205, Computer Room, Restroom",
@@ -474,53 +288,59 @@
                 labelProblem: "Problem Description",
                 placeholderProblem: "Please describe the problem found, such as malfunction, impact on you, or suspected cause of damage",
                 labelPriority: "Urgency Level",
-                priorityLow: "Low",
-                priorityLowDesc: "Not urgent",
-                priorityMedium: "Medium",
-                priorityMediumDesc: "Partially usable",
-                priorityHigh: "High",
-                priorityHighDesc: "Urgent",
+                priorityLow: "Low", priorityLowDesc: "Not urgent",
+                priorityMedium: "Medium", priorityMediumDesc: "Partially usable",
+                priorityHigh: "High", priorityHighDesc: "Urgent",
                 labelContact: "Contact Information",
-                placeholderContact: "Line ID or Instagram account to track repair status (optional)",
+                placeholderContact: "Line ID to track repair status with LineOA TUPP SC",
                 submitBtn: "📤 Submit Repair Report",
                 submitBtnLoading: "⏳ Submitting...",
                 successTitle: "✅ Report Submitted Successfully!",
                 successDetail: "The student council will coordinate with administration and technician team promptly.<br>Report ID:",
                 developerBtn: "About Developer",
-                errorMessage: "An error occurred while submitting the data. Please try again."
+                errorMessage: "An error occurred while submitting the data. Please try again.",
+                menuForm: "📝 Form",
+                menuStatus: "📊 Status",
+                statusTip: "Repair report status updated in real time"
             }
         };
 
-        // Google Sheets Configuration
+        // ===== Google Sheets URL =====
         const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxbx0X973rUfd2SYlJ68CN0nTlCYuEUg2YDVb_RHEcizjX0rwzEJkSSlwDOkA_pPJsV/exec';
-        
+
         let reportCounter = 1;
         let currentLanguage = 'th';
         const reportData = [];
 
-        // Language switching function
+        // ===== Date formatting (ALWAYS CE/Gregorian, Asia/Bangkok, 24h) =====
+        // Use en-GB with Bangkok timezone to ensure Gregorian calendar + CE year regardless of UI language
+        function formatBangkokCE(date = new Date()){
+            const parts = new Intl.DateTimeFormat('en-GB', {
+                timeZone: 'Asia/Bangkok',
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: false
+            }).formatToParts(date);
+            const get = (t) => parts.find(p => p.type === t)?.value || '';
+            return `${get('day')}/${get('month')}/${get('year')} ${get('hour')}:${get('minute')}:${get('second')}`;
+        }
+
+        // ===== Language switching =====
         function switchLanguage(lang) {
             currentLanguage = lang;
             const t = translations[lang];
-            
-            // Apply smooth transition
+
             const elementsToTransition = [
                 '#title', '#subtitle', '#label-name', '#label-id', '#label-location',
                 '#label-equipment', '#label-problem', '#label-priority', '#label-contact',
                 '#submitBtn', '#successTitle', '#successDetail', '#developerBtn',
                 '#priority-low-text', '#priority-medium-text', '#priority-high-text',
-                '#priority-low-desc', '#priority-medium-desc', '#priority-high-desc'
+                '#priority-low-desc', '#priority-medium-desc', '#priority-high-desc',
+                '#tab-form', '#tab-status', '#statusTip'
             ];
-
-            elementsToTransition.forEach(selector => {
-                const element = document.querySelector(selector);
-                if (element) {
-                    element.style.opacity = '0';
-                }
-            });
+            elementsToTransition.forEach(sel => { const el = document.querySelector(sel); if (el) el.style.opacity = '0'; });
 
             setTimeout(() => {
-                // Update main content
                 document.getElementById('title').textContent = t.title;
                 document.getElementById('subtitle').textContent = t.subtitle;
                 document.getElementById('label-name').innerHTML = `${t.labelName} <span class="required">*</span>`;
@@ -535,7 +355,7 @@
                 document.getElementById('successDetail').innerHTML = `${t.successDetail} <span id="reportNumber"></span>`;
                 document.getElementById('developerBtn').textContent = t.developerBtn;
 
-                // Update placeholders
+                // placeholders
                 document.getElementById('studentName').placeholder = t.placeholderName;
                 document.getElementById('studentId').placeholder = t.placeholderId;
                 document.getElementById('studentId').title = t.titleId;
@@ -544,7 +364,7 @@
                 document.getElementById('problemDescription').placeholder = t.placeholderProblem;
                 document.getElementById('contactInfo').placeholder = t.placeholderContact;
 
-                // Update priority labels
+                // priority labels & values
                 document.getElementById('priority-low-text').textContent = t.priorityLow;
                 document.getElementById('priority-medium-text').textContent = t.priorityMedium;
                 document.getElementById('priority-high-text').textContent = t.priorityHigh;
@@ -552,59 +372,69 @@
                 document.getElementById('priority-medium-desc').textContent = t.priorityMediumDesc;
                 document.getElementById('priority-high-desc').textContent = t.priorityHighDesc;
 
-                // **FIX START: Update radio button values**
                 document.getElementById('priorityLow').value = t.priorityLow;
                 document.getElementById('priorityMedium').value = t.priorityMedium;
                 document.getElementById('priorityHigh').value = t.priorityHigh;
-                // **FIX END**
 
-                // Restore opacity
-                elementsToTransition.forEach(selector => {
-                    const element = document.querySelector(selector);
-                    if (element) {
-                        element.style.opacity = '1';
-                    }
-                });
+                // tabs
+                document.getElementById('tab-form').textContent = t.menuForm;
+                document.getElementById('tab-status').textContent = t.menuStatus;
+                document.getElementById('statusTip').textContent = t.statusTip;
+
+                elementsToTransition.forEach(sel => { const el = document.querySelector(sel); if (el) el.style.opacity = '1'; });
             }, 200);
         }
 
-        // Language selector event listener
-        document.getElementById('languageSelect').addEventListener('change', function() {
+        document.getElementById('languageSelect').addEventListener('change', function(){
             switchLanguage(this.value);
         });
 
-        // Function to send data to Google Sheets
+        // ===== Tabs behavior =====
+        const tabForm = document.getElementById('tab-form');
+        const tabStatus = document.getElementById('tab-status');
+        const sectionForm = document.getElementById('section-form');
+        const sectionStatus = document.getElementById('section-status');
+
+        function setActiveTab(which){
+            const isForm = which === 'form';
+            tabForm.classList.toggle('active', isForm);
+            tabStatus.classList.toggle('active', !isForm);
+            tabForm.setAttribute('aria-selected', isForm ? 'true' : 'false');
+            tabStatus.setAttribute('aria-selected', !isForm ? 'true' : 'false');
+            sectionForm.classList.toggle('active', isForm);
+            sectionStatus.classList.toggle('active', !isForm);
+        }
+
+        tabForm.addEventListener('click', () => setActiveTab('form'));
+        tabStatus.addEventListener('click', () => setActiveTab('status'));
+
+        // ===== Send to Google Sheets =====
         async function sendToGoogleSheets(data) {
             try {
-                const response = await fetch(GOOGLE_SHEETS_URL, {
+                await fetch(GOOGLE_SHEETS_URL, {
                     method: 'POST',
                     mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
-                
-                return true; // no-cors mode can't read response
+                return true; // no-cors: assume success
             } catch (error) {
                 console.error('Error sending to Google Sheets:', error);
                 return false;
             }
         }
 
-        // Form submission handler
-        document.getElementById('repairForm').addEventListener('submit', async function(e) {
+        // ===== Form submission =====
+        document.getElementById('repairForm').addEventListener('submit', async function(e){
             e.preventDefault();
-            
             const t = translations[currentLanguage];
-            
-            // Show loading
-            const submitBtn = document.querySelector('.submit-btn');
+
+            // loading state
+            const submitBtn = document.getElementById('submitBtn');
             const originalText = submitBtn.textContent;
             submitBtn.textContent = t.submitBtnLoading;
             submitBtn.disabled = true;
-            
-            // Collect form data
+
             const formData = {
                 reportId: 'RPT' + new Date().getFullYear() + String(reportCounter).padStart(4, '0'),
                 studentName: document.getElementById('studentName').value,
@@ -614,51 +444,38 @@
                 problemDescription: document.getElementById('problemDescription').value,
                 priority: document.querySelector('input[name="priority"]:checked').value,
                 contactInfo: document.getElementById('contactInfo').value || (currentLanguage === 'th' ? 'ไม่ระบุ' : 'Not specified'),
-                timestamp: new Date().toLocaleString(currentLanguage === 'th' ? 'th-TH' : 'en-US', {
-                    timeZone: 'Asia/Bangkok',
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                    second: '2-digit'
-                }),
+
+                // ALWAYS CE (Gregorian) — e.g., 18/08/2025 20:31:05
+                timestamp: formatBangkokCE(new Date()),
+
+                // extra machine-friendly field (optional, CE ISO)
+                timestampISO: new Date().toISOString(),
+
                 language: currentLanguage
             };
-            
-            // Send data to Google Sheets
+
             const success = await sendToGoogleSheets(formData);
-            
+
             if (success) {
-                // Add data to array
                 reportData.push(formData);
-                
-                // Show success message
                 document.getElementById('reportNumber').textContent = formData.reportId;
                 document.getElementById('successMessage').style.display = 'block';
-                
-                // Scroll to success message
-                document.getElementById('successMessage').scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-                
-                // Clear form
+                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
                 this.reset();
-                
-                // Increment counter
                 reportCounter++;
-            } else {
-                // Restore button text and enable if submission failed
                 submitBtn.textContent = originalText;
                 submitBtn.disabled = false;
-                alert(t.errorMessage); // Show an alert for the error
+            } else {
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                alert(t.errorMessage);
             }
         });
 
-        // Initialize language on page load
+        // ===== Init =====
         document.addEventListener('DOMContentLoaded', () => {
             switchLanguage(document.getElementById('languageSelect').value);
+            setActiveTab('form'); // default tab
         });
     </script>
 </body>
